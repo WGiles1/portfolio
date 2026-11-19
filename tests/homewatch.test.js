@@ -20,3 +20,9 @@ test('public demo contains no network calls or persistent storage', () => {
   const js = fs.readFileSync(path.join(root, 'homewatch/demo.js'), 'utf8');
   assert.doesNotMatch(js, /\b(fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage)\b/);
 });
+
+ test('Windows download is linked and includes only clean app files', () => {
+  const page = fs.readFileSync(path.join(root, 'homewatch.html'), 'utf8');
+  assert.match(page, /href="homewatch\/Homewatch-Windows.zip"/);
+  assert.ok(fs.existsSync(path.join(root, 'homewatch', 'Homewatch-Windows.zip')));
+});
