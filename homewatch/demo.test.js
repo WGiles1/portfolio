@@ -1,0 +1,17 @@
+const assert = require('node:assert/strict');
+const {createDemo} = require('./demo.js');
+const demo = createDemo();
+const device = demo.add({name:'Sample phone', type:'Phone', address:'Example only', status:'unfamiliar'});
+assert.equal(demo.devices.length, 4);
+demo.update(device.id, {name:'Sample phone edited', type:'Phone', address:'Example only', status:'known'});
+assert.equal(demo.devices.find(d => d.id === device.id).status, 'known');
+demo.remove(device.id);
+assert.equal(demo.devices.length, 3);
+demo.scan(); demo.scan();
+assert.equal(demo.scanCount, 2);
+assert.equal(demo.history.length, 5);
+demo.reset();
+assert.equal(demo.devices.length, 3);
+assert.equal(demo.history.length, 0);
+assert.equal(demo.scanCount, 0);
+console.log('Demo state tests passed');
